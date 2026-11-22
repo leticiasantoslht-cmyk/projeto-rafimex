@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup — App de Estoque Rafimex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #EEF0EC;
+    --bg-frame: #14161A;
+    --bg-screen: #F7F8F5;
+    --card-bg: #FFFFFF;
+    --ink-900: #16181C;
+    --ink-600: #565B63;
+    --ink-400: #9198A1;
+    --line: #E1E4DE;
+
+    --accent: #38285F;
+    --accent-ink: #FFFFFF;
+
+    --good: #1F7A45;
+    --good-bg: #E1F3E7;
+    --good-line: #BFE4CB;
+
+    --warn-ink: #8A5A00;
+    --warn-bg: #FFF0D2;
+    --warn-line: #F5D48F;
+
+    --crit-ink: #B23226;
+    --crit-bg: #FCE2DE;
+    --crit-line: #F3B7AE;
+
+    --font-display: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg-page: #0E0F11;
+      --bg-frame: #000000;
+      --bg-screen: #17181B;
+      --card-bg: #1E2024;
+      --ink-900: #F3F4F1;
+      --ink-600: #B7BBC0;
+      --ink-400: #7C8187;
+      --line: #2B2E33;
+      --good-bg: #16301F;
+      --good-line: #1F4A2C;
+      --warn-bg: #3A2D0E;
+      --warn-line: #5A4614;
+      --crit-bg: #3A1815;
+      --crit-line: #5C241D;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-page: #0E0F11;
+    --bg-frame: #000000;
+    --bg-screen: #17181B;
+    --card-bg: #1E2024;
+    --ink-900: #F3F4F1;
+    --ink-600: #B7BBC0;
+    --ink-400: #7C8187;
+    --line: #2B2E33;
+    --good-bg: #16301F;
+    --good-line: #1F4A2C;
+    --warn-bg: #3A2D0E;
+    --warn-line: #5A4614;
+    --crit-bg: #3A1815;
+    --crit-line: #5C241D;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg-page);
+    font-family: var(--font-body);
+    color: var(--ink-900);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 48px;
+  }
+
+  .caption {
+    max-width: 380px;
+    margin: 0 auto 20px;
+    text-align: center;
+  }
+  .caption .kicker {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink-600);
+    letter-spacing: 0.02em;
+  }
+  .caption h1 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 4px 0 0;
+    color: var(--ink-900);
+  }
+
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .phone {
+    width: 360px;
+    max-width: 92vw;
+    background: var(--bg-frame);
+    border-radius: 44px;
+    padding: 14px;
+    box-shadow: 0 30px 60px -20px rgba(20, 20, 25, 0.45);
+  }
+
+  .screen {
+    background: var(--bg-screen);
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 700px;
+    position: relative;
+  }
+
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px 4px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-900);
+  }
+
+  .app-header {
+    padding: 8px 20px 14px;
+  }
+  .app-header .eyebrow {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink-600);
+    margin: 0;
+  }
+  .app-header h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 2px 0 0;
+    color: var(--ink-900);
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 20px 16px;
+  }
+
+  .kpi-card {
+    background: linear-gradient(155deg, #223318 0%, #1F7A45 55%, #16321F 100%);
+    border-radius: 24px;
+    padding: 22px 22px 20px;
+    color: #F4FBF6;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card .label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: #D6EEDD;
+    margin: 0 0 6px;
+  }
+  .kpi-card .value {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .kpi-card .sub {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: #C8E7D0;
+    margin-top: 8px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-900);
+    margin: 0 0 10px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 16px;
+    padding: 14px 14px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+  }
+  .item .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .item .info {
+    flex: 1;
+    min-width: 0;
+  }
+  .item .name {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item .meta {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--ink-600);
+    margin-top: 1px;
+  }
+  .item .qty {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .item.crit { background: var(--crit-bg); border-color: var(--crit-line); }
+  .item.crit .dot { background: #E24A3B; }
+  .item.crit .qty, .item.crit .meta { color: var(--crit-ink); }
+
+  .item.warn { background: var(--warn-bg); border-color: var(--warn-line); }
+  .item.warn .dot { background: #F0A63A; }
+  .item.warn .qty, .item.warn .meta { color: var(--warn-ink); }
+
+  .item.good { background: var(--good-bg); border-color: var(--good-line); }
+  .item.good .dot { background: #34A85A; }
+  .item.good .qty, .item.good .meta { color: var(--good); }
+
+  .cta-zone {
+    padding: 12px 20px 22px;
+    background: linear-gradient(to top, var(--bg-screen) 60%, transparent);
+  }
+
+  .cta {
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.01em;
+  }
+  .cta .cam {
+    font-size: 20px;
+  }
+
+  .home-indicator {
+    width: 120px;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--ink-400);
+    opacity: 0.5;
+    margin: 6px auto 2px;
+  }
+
+  @media (max-width: 420px) {
+    .phone { padding: 10px; border-radius: 36px; }
+    .screen { height: 640px; border-radius: 26px; }
+  }
+
+  /* ---- Tela de Login ---- */
+  .view {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+  .view.hidden {
+    opacity: 0;
+    transform: translateX(24px);
+    pointer-events: none;
+  }
+
+  .login-brand {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px;
+    text-align: center;
+  }
+  .login-brand .logo {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--ink-900);
+    letter-spacing: -0.01em;
+  }
+  .login-brand .slogan {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink-600);
+    margin-top: 6px;
+  }
+
+  .login-form {
+    padding: 0 24px 28px;
+  }
+  .field {
+    background: #EEEFEC;
+    border-radius: 14px;
+    padding: 15px 16px;
+    margin-bottom: 12px;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--ink-600);
+  }
+  @media (prefers-color-scheme: dark) {
+    .field { background: #2A2C31; }
+  }
+
+  .login-cta {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 0;
+    margin-top: 6px;
+    cursor: pointer;
+  }
+
+  .step-hint {
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    color: var(--ink-400);
+    padding-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="caption">
+    <p class="kicker">CountMatch · Protótipo clicável</p>
+    <h1 id="screenTitle">Tela 1 — Login</h1>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+
+      <!-- TELA 1: LOGIN -->
+      <div class="view" id="viewLogin">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●●●  Wi-Fi  87%</span>
+        </div>
+
+        <div class="login-brand">
+          <div class="logo">CountMatch</div>
+          <p class="slogan">Contar. Comparar. Corrigir.</p>
+        </div>
+
+        <div class="login-form">
+          <div class="field">Matrícula</div>
+          <div class="field">Senha</div>
+          <button class="login-cta" onclick="goToDashboard()">Entrar</button>
+          <p class="step-hint">toque em "Entrar" para simular a navegação</p>
+        </div>
+      </div>
+
+      <!-- TELA 2: DASHBOARD -->
+      <div class="view hidden" id="viewDashboard">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●●●  Wi-Fi  87%</span>
+        </div>
+
+        <div class="app-header">
+          <p class="eyebrow">CountMatch · Depósito Central</p>
+          <h2>Estoque em tempo real</h2>
+        </div>
+
+        <div class="content">
+          <div class="kpi-card">
+            <p class="label">Acuracidade do Estoque</p>
+            <div class="value">96%</div>
+            <p class="sub">Contagem física × sistema — última auditoria hoje</p>
+          </div>
+
+          <p class="section-title">Ruptura por prioridade</p>
+
+          <div class="item crit">
+            <span class="dot"></span>
+            <div class="info">
+              <div class="name">689 Caminho de Mesa 40x90cm Branca</div>
+              <div class="meta">Crítico — repor hoje</div>
+            </div>
+            <div class="qty">2 un</div>
+          </div>
+
+          <div class="item warn">
+            <span class="dot"></span>
+            <div class="info">
+              <div class="name">551 Lugar Americano 35x50cm Off-White</div>
+              <div class="meta">Atenção — repor esta semana</div>
+            </div>
+            <div class="qty">15 un</div>
+          </div>
+
+          <div class="item good">
+            <span class="dot"></span>
+            <div class="info">
+              <div class="name">Ibis Outono Topper 152cm Quad. Branca</div>
+              <div class="meta">Estável</div>
+            </div>
+            <div class="qty">120 un</div>
+          </div>
+
+          <div class="item good">
+            <span class="dot"></span>
+            <div class="info">
+              <div class="name">SP1747 Sousplat 33cm Diam Prateado</div>
+              <div class="meta">Estável</div>
+            </div>
+            <div class="qty">84 un</div>
+          </div>
+        </div>
+
+        <div class="cta-zone">
+          <button class="cta" onclick="goToLogin()"><span class="cam">📷</span> Escanear Código</button>
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function goToDashboard() {
+    document.getElementById('viewLogin').classList.add('hidden');
+    document.getElementById('viewDashboard').classList.remove('hidden');
+    document.getElementById('screenTitle').textContent = 'Tela 2 — Dashboard';
+  }
+  function goToLogin() {
+    document.getElementById('viewDashboard').classList.add('hidden');
+    document.getElementById('viewLogin').classList.remove('hidden');
+    document.getElementById('screenTitle').textContent = 'Tela 1 — Login';
+  }
+</script>
+
+</body>
+</html>
